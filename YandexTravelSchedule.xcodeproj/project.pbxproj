@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		56FE69362CDF61F70059BEF9 /* YandexTravelSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = YandexTravelSchedule.app; path = "/Users/nikitakozlovskij/Documents/GitHub/YandexTravelSchedule/build/Debug-iphoneos/YandexTravelSchedule.app"; sourceTree = "<absolute>"; };
+		56C831262CE71C9A005B19CA /* YandexTravelSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = YandexTravelSchedule.app; path = "/Users/nikitakozlovskij/Documents/GitHub/YandexTravelSchedule/build/Debug-iphoneos/YandexTravelSchedule.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -68,7 +68,7 @@
 				56FE69662CDF66F10059BEF9 /* OpenAPIRuntime */,
 			);
 			productName = YandexTravelSchedule;
-			productReference = 56FE69362CDF61F70059BEF9 /* YandexTravelSchedule.app */;
+			productReference = 56C831262CE71C9A005B19CA /* YandexTravelSchedule.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
