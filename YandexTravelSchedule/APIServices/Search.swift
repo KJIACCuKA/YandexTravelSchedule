@@ -9,21 +9,28 @@ import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-typealias Searches = Components.Schemas.SearchObject
+typealias SearchRoutes = Components.Schemas.RoutesList
 
 protocol SearchServiceProtocol {
-    func getSearches(from: String, to: String) async throws -> Searches
+    func getSearch(from: String, to: String) async throws -> SearchRoutes
 }
 
 final class SearchService: SearchServiceProtocol {
     private let client: Client
+    private let apikey: String
 
-    init(client: Client) {
+    init(client: Client, apikey: String) {
         self.client = client
+        self.apikey = apikey
     }
 
-    func getSearches(from fromStation: String, to toStation: String) async throws -> Searches {
-        let response = try await client.getSearches(query: .init(from: fromStation, to: toStation))
+    // Расписание рейсов между станциями:
+    func getSearch(from: String, to: String) async throws -> SearchRoutes {
+        let response = try await client.getSearch(query: .init(
+            apikey: apikey,
+            from: from,
+            to: to
+        ))
         return try response.ok.body.json
     }
 }
