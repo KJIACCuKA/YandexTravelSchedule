@@ -32,6 +32,7 @@ struct SettingsView: View {
                 Text("Версия 1.0 (beta)")
             }
             .font(.system(size: 12))
+            .padding(.bottom, 24)
         }
     }
     
