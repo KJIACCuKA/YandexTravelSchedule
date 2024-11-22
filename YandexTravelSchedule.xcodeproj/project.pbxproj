@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		56C832112CEB14EF005B19CA /* YandexTravelSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexTravelSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		56C832112CEB14EF005B19CA /* YandexTravelSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = YandexTravelSchedule.app; path = "/Users/nikitakozlovskij/Documents/GitHub/YandexTravelSchedule/build/Debug-iphoneos/YandexTravelSchedule.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,6 @@
 			isa = PBXGroup;
 			children = (
 				56FE69382CDF61F70059BEF9 /* YandexTravelSchedule */,
-				56C832112CEB14EF005B19CA /* YandexTravelSchedule.app */,
 			);
 			sourceTree = "<group>";
 		};
