@@ -66,7 +66,7 @@ struct ContentView: View {
 
 private extension ContentView {
     func getNearestStations() {
-        let service = NearestStationsService(client: client)
+        let service = NearestStationsService(client: client, apikey: Resources.apiKey)
         Task {
             do {
                 let response = try await service.getNearestStations(lat: 59.864177, lng: 30.319163, distance: 50)
@@ -90,7 +90,7 @@ private extension ContentView {
     }
 
     func getCopyright() {
-        let service = CopyrightService(client: client)
+        let service = CopyrightService(client: client, apikey: Resources.apiKey)
         Task {
             do {
                 let response = try await service.getCopyright()
@@ -102,10 +102,10 @@ private extension ContentView {
     }
 
     func getSchedules() {
-        let service = SchedulesService(client: client)
+        let service = SchedulesService(client: client, apikey: Resources.apiKey)
         Task {
             do {
-                let response = try await service.getSchedules(station: "s9600213", date: nil)
+                let response = try await service.getSchedule(station: "s9600213", date: "2024-11-11")
                 guard
                     let schedules = response.schedule,
                     let total = response.pagination?.total,
@@ -126,10 +126,10 @@ private extension ContentView {
     }
 
     func getSearches() {
-        let service = SearchService(client: client)
+        let service = SearchService(client: client, apikey: Resources.apiKey)
         Task {
             do {
-                let response = try await service.getSearches(from: "s9623561", to: "s9600213")
+                let response = try await service.getSearch(from: "s9623561", to: "s9600213")
                 guard
                     let segments = response.segments,
                     let intervalSegments = response.interval_segments,
@@ -153,22 +153,31 @@ private extension ContentView {
     }
 
     func getThreads() {
-        let service = ThreadService(client: client)
+        guard let serverURL = try? Servers.server1() else { return }
+        
+        let client = Client(
+            serverURL: serverURL,
+            transport: URLSessionTransport()
+        )
+        
+        let service = ThreadService(
+            client: client,
+            apikey: Resources.apiKey
+        )
+        
         Task {
-            do {
-                let response = try await service.getThread(uid: "UJ-615_240316_c1764_12")
-                print(response)
-            } catch {
-                print(error.localizedDescription)
-            }
+            let threads = try await service.getThread(
+                uid: "6802_0_2006004_g24_4"
+            )
+            print(threads)
         }
     }
 
     func getNearestSettlement() {
-        let service = NearestSettlementService(client: client)
+        let service = NearestSettlementService(client: client, apikey: Resources.apiKey)
         Task {
             do {
-                let response = try await service.getNearestSettlement(lat: 59.864177, lng: 30.319163, distance: 50)
+                let response = try await service.getNearestSettlement(lat: 59.864177, lng: 30.319163)
                 print(response)
             } catch {
                 print(error.localizedDescription)
@@ -177,10 +186,10 @@ private extension ContentView {
     }
 
     func getCarriers() {
-        let service = CarriersService(client: client)
+        let service = CarriersService(client: client, apikey: Resources.apiKey)
         Task {
             do {
-                let response = try await service.getCarriers(code: "SU", system: .iata)
+                let response = try await service.getCarrier(code: "SU", system: .iata)
                 print(response)
             } catch {
                 print(error.localizedDescription)
@@ -189,7 +198,7 @@ private extension ContentView {
     }
 
     func getStationsList() {
-        let service = StationsListService(client: client)
+        let service = StationsListService(client: client, apikey: Resources.apiKey)
         Task {
             do {
                 let stations = try await service.getStationsList()
