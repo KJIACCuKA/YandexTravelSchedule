@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Struct
-struct Schedule: Hashable, Identifiable {
+struct Schedules: Hashable, Identifiable {
     let id = UUID()
     let cities: [City]
     let stations: [Station]
@@ -18,8 +18,8 @@ struct Schedule: Hashable, Identifiable {
 }
 
 // MARK: - Mock data
-extension Schedule {
-    static let sampleData = Schedule(
+extension Schedules {
+    static let sampleData = Schedules(
         cities: City.sampleData,
         stations: Station.sampleData,
         destinations: Destination.emptyDestination,
