@@ -56,7 +56,7 @@ struct CarrierView: View {
             Spacer()
         }
         .padding(.horizontal, .spacerL)
-        .setCustomNavigationBar(title: "ИНформация о перевозчике")
+        .setCustomNavigationBar(title: "Информация о перевозчике")
     }
 }
 
