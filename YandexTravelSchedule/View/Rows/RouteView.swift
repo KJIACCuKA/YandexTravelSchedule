@@ -72,5 +72,5 @@ struct RouteView: View {
 }
 
 #Preview {
-    RouteView(route: Schedule.sampleData.routes[0], carrier: Carrier.sampleData[0])
+    RouteView(route: Schedules.sampleData.routes[0], carrier: Carrier.sampleData[0])
 }

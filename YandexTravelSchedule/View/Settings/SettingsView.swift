@@ -9,38 +9,36 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State private var isEnabled = false
+    @Binding var darkMode: Bool
     
     var body: some View {
-        VStack {
-            Toggle("Темная тема", isOn: $isEnabled)
-                .padding(.all, 16)
-            Button(action: userLicense) {
-                HStack {
-                    Text("Пользовательское соглашение")
-                        .foregroundColor(.black)
-                    Spacer()
-                    Image("Bolt", bundle: nil)
-                }
-                .padding(.leading, 16)
-                .padding(.trailing, 16)
+        VStack(spacing: 0) {
+            Toggle("Темная тема", isOn: $darkMode)
+                .setRowElement()
+                .tint(.ypBlue)
+            NavigationLink {
+                AgreementView()
+            } label: {
+                RowSearchView(rowString: "Пользовательское соглашение")
             }
+            .setRowElement()
+
             Spacer()
-            VStack {
+            
+            VStack(alignment: .center, spacing: 16) {
                 Text("Приложение использует API «Яндекс.Расписания»")
-                    .padding(.all, 16)
-                Text("Версия 1.0 (beta)")
+                Text("Версия \(Bundle.main.appVersionLong).\(Bundle.main.appBuild)")
             }
-            .font(.system(size: 12))
-            .padding(.bottom, 24)
+            .font(.regSmall)
+            .frame(minHeight: 44)
         }
-    }
-    
-    func userLicense() {
-        print("Work")
+        .padding(.vertical, .spacerXXL)
+        .foregroundColor(.ypBlackDuo)
     }
 }
 
 #Preview {
-    SettingsView()
+    NavigationStack {
+        SettingsView(darkMode: .constant(false))
+    }
 }

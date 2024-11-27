@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct YandexTravelScheduleApp: App {
+    
+    @State private var schedule = Schedules.sampleData
+    @State private var darkMode = false
+    
     var body: some Scene {
         WindowGroup {
-            TabBarView()
+            RootTabView(schedule: $schedule, darkMode: $darkMode)
+                .environment(\.colorScheme, darkMode ? .dark : .light)
         }
     }
 }

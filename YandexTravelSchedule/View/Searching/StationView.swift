@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StationView: View {
     
-    @Binding var schedule: Schedule
+    @Binding var schedule: Schedules
     @Binding var navPath: [ViewsRouter]
     @Binding var direction: Int
 
@@ -54,7 +54,7 @@ struct StationView: View {
 #Preview {
     NavigationStack {
         StationView(
-            schedule: .constant(Schedule.sampleData),
+            schedule: .constant(Schedules.sampleData),
             navPath: .constant([]),
             direction: .constant(.departure)
         )

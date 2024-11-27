@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CityView: View {
     
-    @Binding var schedule: Schedule
+    @Binding var schedule: Schedules
     @Binding var navPath: [ViewsRouter]
     @Binding var direction: Int
 
@@ -29,14 +29,18 @@ struct CityView: View {
             } else {
                 ScrollView(.vertical) {
                     ForEach(searchingResults) { city in
-                        NavigationLink(value: ViewsRouter.stationView) {
-                            RowSearchView(rowString: city.title)
+                        if #available(iOS 16.0, *) {
+                            NavigationLink(value: ViewsRouter.stationView) {
+                                RowSearchView(rowString: city.title)
+                            }
+                            .simultaneousGesture(TapGesture().onEnded {
+                                schedule.destinations[direction].cityTitle = city.title
+                            })
+                            .setRowElement()
+                            .padding(.vertical, .spacerL)
+                        } else {
+                            // Fallback on earlier versions
                         }
-                        .simultaneousGesture(TapGesture().onEnded {
-                            schedule.destinations[direction].cityTitle = city.title
-                        })
-                        .setRowElement()
-                        .padding(.vertical, .spacerL)
                     }
                 }
                 .padding(.vertical, .spacerL)
@@ -53,6 +57,6 @@ struct CityView: View {
 
 #Preview {
     NavigationStack {
-        CityView(schedule: .constant(Schedule.sampleData), navPath: .constant([]), direction: .constant(0))
+        CityView(schedule: .constant(Schedules.sampleData), navPath: .constant([]), direction: .constant(0))
     }
 }
