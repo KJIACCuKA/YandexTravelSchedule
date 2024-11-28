@@ -15,8 +15,7 @@ struct YandexTravelScheduleApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootTabView(schedule: $schedule, darkMode: $darkMode)
-                .environment(\.colorScheme, darkMode ? .dark : .light)
+            SplashScreenView()
         }
     }
 }
