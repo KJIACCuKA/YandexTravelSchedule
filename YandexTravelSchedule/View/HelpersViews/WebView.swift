@@ -8,64 +8,68 @@
 import SwiftUI
 import WebKit
 
-enum URLAdress {
-    static let agreementURL = URL(string: "https://yandex.ru/travel/schedule/agreement")
-}
-
 struct WebView: UIViewRepresentable {
     
-    let url: URL
-    @ObservedObject var viewModel: ProgressViewModel
+    let url: String
+    @Binding var isLoading: Bool
+    @Binding var isLoadingError: Bool
+    @Binding var progress: Double
     
     private let webView = WKWebView()
     
     func makeUIView(context: Context) -> WKWebView {
-        webView.load(URLRequest(url: url))
+        if let url = URL(string: url) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
         return webView
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
     }
-}
-
-extension WebView {
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, viewModel: viewModel)
+        Coordinator(self)
     }
-    
-    class Coordinator: NSObject {
+}
+
+extension WebView{
+    class Coordinator: NSObject, WKNavigationDelegate {
         private var parent: WebView
-        private var viewModel: ProgressViewModel
-        private var observer: NSKeyValueObservation?
-        
-        init(_ parent: WebView, viewModel: ProgressViewModel) {
+        private var estimatedProgressObservation: NSKeyValueObservation?
+
+        init(_ parent: WebView) {
             self.parent = parent
-            self.viewModel = viewModel
             super.init()
+            self.parent.webView.navigationDelegate = self
             
-            observer = self.parent.webView.observe(\.estimatedProgress) { [weak self] webView, _ in
-                guard let self = self else { return }
-                self.parent.viewModel.progress = webView.estimatedProgress
+            estimatedProgressObservation = self.parent.webView.observe(
+                \.estimatedProgress,
+                 options: [],
+                 changeHandler: { [weak self] webView, _ in
+                     guard let self = self else { return }
+                     self.parent.progress = webView.estimatedProgress
+                 })
+        }
+
+        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+            DispatchQueue.main.async {
+                self.parent.isLoading = true
             }
         }
-        
-        deinit {
-            observer = nil
+
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            DispatchQueue.main.async {
+                self.parent.isLoading = false
+            }
+        }
+
+        func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+            DispatchQueue.main.async {
+                self.parent.isLoading = false
+                self.parent.progress = 0.0
+                self.parent.isLoadingError = true
+            }
         }
     }
-}
-
-extension WebView {
-    class ProgressViewModel: ObservableObject {
-        @Published var progress: Double = .zero
-        
-        init (progress: Double) {
-            self.progress = progress
-        }
-    }
-}
-
-#Preview {
-    WebView(url: URLAdress.agreementURL!, viewModel: WebView.ProgressViewModel(progress: .zero))
 }

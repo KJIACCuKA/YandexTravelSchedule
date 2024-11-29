@@ -10,52 +10,38 @@ import Network
 
 struct AgreementView: View {
     
-    @State private var isConnected = true
-    @State var isProgressViewVisible: Bool = true
-    @StateObject var viewModel = WebView.ProgressViewModel(progress: .zero)
+    @State private var isLoading = true
+    @State private var loadingProgress: Double = 0.0
+    @State private var isLoadingError = false
     let userAgreement = "Пользовательское соглашение"
     
     var body: some View {
-        ZStack {
-            Color.ypWhite
-                .ignoresSafeArea()
-            VStack {
-                if isConnected {
-                    if isProgressViewVisible {
-                        ProgressView(value: viewModel.progress)
-                            .progressViewStyle(.linear)
-                            .tint(.ypBlack)
-                            .scaleEffect(x: 1, y: 0.5)
-                            .onChange(of: viewModel.progress) { value in
-                                if value > 0.99 {
-                                    isProgressViewVisible = false
-                                }
-                            }
-                    }
-                    WebView(url: URLAdress.agreementURL!, viewModel: viewModel)
-                        .navigationTitle(userAgreement)
-                        .background(.ypWhite)
-                        .onAppear {
-                            checkConnection()
-                        }
-                } else {
-                    ErrorsView(errorType: .connectionError)
-                        .navigationBarBackButtonHidden(true)
-                }
+        VStack {
+            ProgressView(value: loadingProgress)
+                .progressViewStyle(.linear)
+                .opacity(loadingProgress == 1.0 ? 0 : 1)
+            ZStack {
+                WebView(
+                    url: Resources.userAgreementURL,
+                    isLoading: $isLoading,
+                    isLoadingError: $isLoadingError,
+                    progress: $loadingProgress
+                )
+                .opacity(isLoadingError ? 0 : 1)
+                ProgressView()
+                    .opacity(isLoading ? 1 : 0)
+                ErrorsView(errorType: .connectionError)
+                    .opacity(isLoadingError ? 1 : 0)
             }
         }
-        
+        .navigationTitle(userAgreement)
+        .navigationBarTitleDisplayMode(.inline)
+        .ignoresSafeArea(edges: [.leading, .trailing, .bottom])
+        .onAppear {
+            isLoading = true
+            loadingProgress = 0.0
+            isLoadingError = false
         }
-    func checkConnection() {
-        let monitor = NWPathMonitor()
-        let queue = DispatchQueue(label: "Monitor")
-        
-        monitor.pathUpdateHandler = { path in
-            DispatchQueue.main.async {
-                self.isConnected = (path.status == .satisfied)
-            }
-        }
-        monitor.start(queue: queue)
     }
 }
 
