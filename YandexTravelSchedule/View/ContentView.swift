@@ -153,12 +153,6 @@ private extension ContentView {
     }
 
     func getThreads() {
-        guard let serverURL = try? Servers.server1() else { return }
-        
-        let client = Client(
-            serverURL: serverURL,
-            transport: URLSessionTransport()
-        )
         
         let service = ThreadService(
             client: client,
