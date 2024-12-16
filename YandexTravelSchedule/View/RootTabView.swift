@@ -13,7 +13,7 @@ struct RootTabView: View {
     @Binding var darkMode: Bool
     @State var navPath: [ViewsRouter] = []
     @State var direction: Int = .departure
-    @State var stories: [Story] = Story.sampleData
+    @State var stories: [Story] = Story.mockData
     
     var body: some View {
         NavigationStack(path: $navPath) {
