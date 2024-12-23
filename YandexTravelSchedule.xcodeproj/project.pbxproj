@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5642F08A2D1932070050E23B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5642F0892D1932070050E23B /* Kingfisher */; };
+		5642F08D2D1932600050E23B /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5642F08C2D1932600050E23B /* SVGKit */; };
+		5642F08F2D1932600050E23B /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5642F08E2D1932600050E23B /* SVGKitSwift */; };
 		56FE69642CDF66EB0059BEF9 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = 56FE69632CDF66EB0059BEF9 /* OpenAPIURLSession */; };
 		56FE69672CDF66F10059BEF9 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 56FE69662CDF66F10059BEF9 /* OpenAPIRuntime */; };
 /* End PBXBuildFile section */
@@ -28,7 +31,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5642F08A2D1932070050E23B /* Kingfisher in Frameworks */,
 				56FE69672CDF66F10059BEF9 /* OpenAPIRuntime in Frameworks */,
+				5642F08F2D1932600050E23B /* SVGKitSwift in Frameworks */,
+				5642F08D2D1932600050E23B /* SVGKit in Frameworks */,
 				56FE69642CDF66EB0059BEF9 /* OpenAPIURLSession in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,6 +73,9 @@
 			packageProductDependencies = (
 				56FE69632CDF66EB0059BEF9 /* OpenAPIURLSession */,
 				56FE69662CDF66F10059BEF9 /* OpenAPIRuntime */,
+				5642F0892D1932070050E23B /* Kingfisher */,
+				5642F08C2D1932600050E23B /* SVGKit */,
+				5642F08E2D1932600050E23B /* SVGKitSwift */,
 			);
 			productName = YandexTravelSchedule;
 			productReference = 5678CC342CF45062008F75E5 /* YandexTravelSchedule.app */;
@@ -100,6 +109,8 @@
 				56FE69622CDF66EB0059BEF9 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */,
 				56FE69652CDF66F10059BEF9 /* XCRemoteSwiftPackageReference "swift-openapi-runtime" */,
 				56FE69682CDF66FA0059BEF9 /* XCRemoteSwiftPackageReference "swift-openapi-generator" */,
+				5642F0882D1932070050E23B /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				5642F08B2D1932600050E23B /* XCRemoteSwiftPackageReference "SVGKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 56FE692D2CDF61F70059BEF9;
@@ -342,6 +353,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5642F0882D1932070050E23B /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.3;
+			};
+		};
+		5642F08B2D1932600050E23B /* XCRemoteSwiftPackageReference "SVGKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVGKit/SVGKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		56FE69622CDF66EB0059BEF9 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-openapi-urlsession";
@@ -369,6 +396,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5642F0892D1932070050E23B /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5642F0882D1932070050E23B /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		5642F08C2D1932600050E23B /* SVGKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5642F08B2D1932600050E23B /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKit;
+		};
+		5642F08E2D1932600050E23B /* SVGKitSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5642F08B2D1932600050E23B /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKitSwift;
+		};
 		56FE69632CDF66EB0059BEF9 /* OpenAPIURLSession */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 56FE69622CDF66EB0059BEF9 /* XCRemoteSwiftPackageReference "swift-openapi-urlsession" */;
