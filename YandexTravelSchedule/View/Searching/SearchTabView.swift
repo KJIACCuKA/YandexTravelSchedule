@@ -26,7 +26,7 @@ struct SearchTabView: View {
 #Preview {
     NavigationStack {
         SearchTabView(
-            stories: .constant(Story.sampleData),
+            stories: .constant(Story.mockData),
             schedule: .constant(Schedules.sampleData),
             navPath: .constant([]),
             direction: .constant(0)
