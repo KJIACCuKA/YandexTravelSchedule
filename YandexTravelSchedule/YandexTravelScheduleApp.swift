@@ -10,12 +10,16 @@ import SwiftUI
 @main
 struct YandexTravelScheduleApp: App {
     
-    @State private var schedule = Schedules.sampleData
-    @State private var darkMode = false
+    @StateObject var settings = SettingsViewModel(networkService: NetworkService())
     
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            RootTabView(
+                destinationsViewModel: SearchScreenViewModel(),
+                rootViewModel: RootViewModel(networkService: NetworkService())
+            )
+                .environmentObject(settings)
+                .environment(\.colorScheme, settings.darkMode ? .dark : .light)
         }
     }
 }

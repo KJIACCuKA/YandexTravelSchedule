@@ -2,7 +2,7 @@
 //  SettingsViewModel.swift
 //  YandexTravelSchedule
 //
-//  Created by Никита Козловский on 23.12.2024.
+//  Created by Никита Козловский on 24.12.2024.
 //
 
 import SwiftUI
@@ -26,18 +26,18 @@ final class SettingsViewModel: ObservableObject {
 
     init(networkService: NetworkService) {
         self.networkService = networkService
-        self.getCopyright()
+//        self.getCopyright()
     }
 
-    func getCopyright() {
-        Task {
-            let service = CopyrightService(client: networkService.client)
-            do {
-                let response = try await service.getCopyright()
-                copyrightInfo = response.copyright?.text ?? ""
-            } catch {
-                throw ErrorType.connectionError
-            }
-        }
-    }
+//    func getCopyright() {
+//        Task {
+//            let service = CopyrightService(client: networkService.client)
+//            do {
+//                let response = try await service.getCopyright()
+//                copyrightInfo = response.copyright?.text ?? ""
+//            } catch {
+//                throw ErrorType.connectionError
+//            }
+//        }
+//    }
 }

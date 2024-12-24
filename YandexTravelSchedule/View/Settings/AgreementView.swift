@@ -30,7 +30,7 @@ struct AgreementView: View {
                 .opacity(isLoadingError ? 0 : 1)
                 ProgressView()
                     .opacity(isLoading ? 1 : 0)
-                ErrorsView(errorType: .connectionError)
+                ErrorView(errorType: .connectionError)
                     .opacity(isLoadingError ? 1 : 0)
             }
         }

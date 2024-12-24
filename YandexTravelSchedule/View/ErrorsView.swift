@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct ErrorsView: View {
+struct ErrorView: View {
     
-    @State var errorType: ErrorType
+    let errorType: ErrorType
     
     var body: some View {
         Image(errorType.imageName)
         Text(errorType.description)
-            .font(.boldMedium)
+            .font(AppFonts.Bold.medium)
     }
 }
 
 #Preview {
-    ErrorsView(errorType: ErrorType.serverError)
+    ErrorView(errorType: ErrorType.connectionError)
 }

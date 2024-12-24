@@ -1,0 +1,24 @@
+//
+//  String.swift
+//  YandexTravelSchedule
+//
+//  Created by Никита Козловский on 24.12.2024.
+//
+
+import Foundation
+
+extension String {
+    var getLocalizedShortDate: String {
+        let apiDateFormatter = DateFormatter()
+        apiDateFormatter.dateFormat = "yyyy-MM-dd"
+        guard let date = apiDateFormatter.date(from: self) else { return "API date format wrong" }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd MMMM"
+        return dateFormatter.string(from: date)
+    }
+    var returnTimeString: String {
+        return String(self.suffix(14).prefix(5))
+    }
+}
