@@ -9,82 +9,103 @@ import SwiftUI
 
 struct MainSearchView: View {
     
-    @Binding var schedule: Schedules
     @Binding var navPath: [ViewsRouter]
-    @Binding var direction: Int
+    @ObservedObject var rootViewModel: RootViewModel
+    @ObservedObject var viewModel: SearchScreenViewModel
+    
+    private let searchButtonTitle = "Найти"
     private let dummyDirection = ["Откуда", "Куда"]
     
-    private var isDepartureReady: Bool {
-        !schedule.destinations[.departure].cityTitle.isEmpty && !schedule.destinations[.departure].stationTitle.isEmpty
-    }
-
-    private var isArrivalReady: Bool {
-        !schedule.destinations[.arrival].cityTitle.isEmpty && !schedule.destinations[.arrival].stationTitle.isEmpty
-    }
-    
     var body: some View {
-        HStack(alignment: .center, spacing: 16) {
-            VStack(alignment: .leading, spacing: 0) {
-                ForEach(0 ..< 2) { item in
-                    let isCityEmpty = schedule.destinations[item].cityTitle.isEmpty
-                    let isStationEmpty = schedule.destinations[item].stationTitle.isEmpty
-                    let destinationLabel = isCityEmpty ? dummyDirection[item] : schedule.destinations[item].cityTitle
-                    + (isStationEmpty ? "" : " (" + schedule.destinations[item].stationTitle + ")")
-                    NavigationLink(value: ViewsRouter.cityView) {
-                        HStack {
-                            Text(destinationLabel)
-                                .foregroundStyle(schedule.destinations[item].cityTitle.isEmpty ? .ypGray : .ypBlack)
-                            Spacer()
-                        }
-                        .padding(.spacerL)
-                        .frame(maxWidth: .infinity, maxHeight: 48)
-                    }
-                    .simultaneousGesture(TapGesture().onEnded {
-                        direction = item
-                    })
-                }
-            }
-            .background(.ypWhite)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            ZStack {
-                Circle()
-                    .foregroundColor(.ypWhite)
-                    .frame(width: 36)
-                Button {
-                    (
-                        schedule.destinations[.departure], schedule.destinations[.arrival]
-                    ) = (
-                        schedule.destinations[.arrival], schedule.destinations[.departure]
-                    )
-                } label: {
-                    Image.iconSearchSwap
-                        .foregroundColor(.ypBlue)
-                }
-            }
-        }
-        .padding(.spacerL)
-        .background(.ypBlue)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .frame(height: 128)
-        .padding(.top, .spacerXL)
-        .padding(.horizontal, .spacerL)
-
-        if isDepartureReady && isArrivalReady {
-            NavigationLink(value: ViewsRouter.routeView) {
-                Text("Найти")
-                    .font(.boldSmall)
-                    .foregroundStyle(.ypWhite)
-                    .frame(width: 150, height: 60)
-                    .background(.ypBlue)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .padding(.spacerL)
-            }
+        searchWidget
+        if viewModel.isSearchButtonReady {
+            searchButton
         }
         Spacer()
     }
 }
 
+private extension MainSearchView {
+    var searchWidget: some View {
+        HStack(alignment: .center, spacing: AppSizes.Spacing.large) {
+            destinationsList
+            swapButton
+        }
+        .padding(AppSizes.Spacing.large)
+        .background(AppColors.Universal.blue)
+        .clipShape(RoundedRectangle(cornerRadius: AppSizes.CornerRadius.xLarge))
+        .frame(height: AppSizes.Height.searchingForm)
+        .padding(.top, AppSizes.Spacing.xLarge)
+        .padding(.horizontal, AppSizes.Spacing.large)
+    }
+
+    var swapButton: some View {
+        ZStack {
+            Circle()
+                .foregroundStyle(AppColors.Universal.white)
+                .frame(width: AppSizes.Size.swappingButton)
+            Button {
+                viewModel.swapDestinations()
+            } label: {
+                AppImages.Icons.swap
+                    .foregroundStyle(AppColors.Universal.blue)
+            }
+        }
+    }
+
+    var searchButton: some View {
+        NavigationLink(value: ViewsRouter.routeView) {
+            Text(searchButtonTitle)
+                .setCustomButton(width: AppSizes.Width.searchButton, padding: .all)
+        }
+    }
+
+    var destinationsList: some View {
+        ZStack {
+            VStack(alignment: .leading, spacing: .zero) {
+                ForEach(Array(viewModel.destinations.enumerated()), id: \.offset) { index, destination in
+                    let city = destination.city.title
+                    let station = destination.station.title.isEmpty ? "" : " (" + destination.station.title + ")"
+                    let destinationLabel = city.isEmpty
+                    ? dummyDirection[index]
+                    : city + station
+                    return NavigationLink(value: ViewsRouter.cityView) {
+                        HStack {
+                            Text(destinationLabel)
+                                .foregroundStyle(
+                                    rootViewModel.state == .loading
+                                    ? .clear
+                                    : city.isEmpty
+                                    ? AppColors.Universal.gray
+                                    : AppColors.Universal.black
+                                )
+                            Spacer()
+                        }
+                        .padding(AppSizes.Spacing.large)
+                        .frame(maxWidth: .infinity, maxHeight: AppSizes.Height.searchingRow)
+                    }
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded { viewModel.setDirection(to: index) }
+                    )
+                }
+            }
+            .background(AppColors.Universal.white)
+            .clipShape(RoundedRectangle(cornerRadius: AppSizes.CornerRadius.xLarge))
+            if rootViewModel.state == .loading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .ypBlackDuo))
+            }
+        }
+    }
+}
+
 #Preview {
-    MainSearchView(schedule: .constant(Schedules.sampleData), navPath: .constant([]), direction: .constant(0))
+    NavigationStack {
+        MainSearchView(
+            navPath: .constant([]),
+            rootViewModel: RootViewModel(networkService: NetworkService()),
+            viewModel: SearchScreenViewModel(destinations: Destination.sampleData)
+        )
+    }
 }

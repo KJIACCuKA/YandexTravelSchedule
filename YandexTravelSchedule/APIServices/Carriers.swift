@@ -10,29 +10,26 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 typealias Carriers = Components.Schemas.Carriers
-typealias CarrierSystem = Operations.getCarrier.Input.Query.systemPayload
 
 protocol CarriersServiceProtocol {
-    func getCarrier(code: String, system: CarrierSystem) async throws -> Carriers
+    func getCarriers(code: Int, system: Components.Parameters.systemParam?) async throws -> Carriers
+    func getCarriers(code: Int) async throws -> Carriers
 }
 
-final class CarriersService: CarriersServiceProtocol {
-    
+actor CarriersService: CarriersServiceProtocol, Sendable {
     private let client: Client
-    private let apikey: String
 
-    init(client: Client, apikey: String) {
+    init(client: Client) {
         self.client = client
-        self.apikey = apikey
     }
 
-    // Информация о перевозчике:
-    func getCarrier(code: String, system: CarrierSystem = .yandex) async throws -> Carriers {
-        let response = try await client.getCarrier(query: .init(
-            apikey: apikey,
-            code: code,
-            system: system
-        ))
+    func getCarriers(code: Int) async throws -> Carriers {
+        let response = try await client.getCarrier(query: .init(code: code))
+        return try response.ok.body.json
+    }
+
+    func getCarriers(code: Int, system: Components.Parameters.systemParam?) async throws -> Carriers {
+        let response = try await client.getCarrier(query: .init(code: code, system: system))
         return try response.ok.body.json
     }
 }

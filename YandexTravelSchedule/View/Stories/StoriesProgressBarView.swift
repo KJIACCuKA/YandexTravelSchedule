@@ -2,10 +2,11 @@
 //  StoriesProgressBarView.swift
 //  YandexTravelSchedule
 //
-//  Created by Никита Козловский on 16.12.2024.
+//  Created by Никита Козловский on 24.12.2024.
 //
 
 import SwiftUI
+
 import Combine
 
 struct StoriesProgressBarView: View {

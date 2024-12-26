@@ -9,27 +9,21 @@ import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-typealias Threads = Components.Schemas.ThreadList
+typealias Threads = Components.Schemas.ThreadObject
 
 protocol ThreadServiceProtocol {
     func getThread(uid: String) async throws -> Threads
 }
 
-final class ThreadService: ThreadServiceProtocol {
+actor ThreadService: ThreadServiceProtocol, Sendable {
     private let client: Client
-    private let apikey: String
 
-    init(client: Client, apikey: String) {
+    init(client: Client) {
         self.client = client
-        self.apikey = apikey
     }
 
-    // Список станций следования:
     func getThread(uid: String) async throws -> Threads {
-        let response = try await client.getThread(query: .init(
-            apikey: apikey,
-            uid: uid
-        ))
+        let response = try await client.getThread(query: .init(uid: uid))
         return try response.ok.body.json
     }
 }

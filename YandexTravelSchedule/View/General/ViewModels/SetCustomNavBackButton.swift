@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SetCustomNavBackButton: ViewModifier {
-    // swiftlint:disable:next attributes
     @Environment(\.dismiss) var dismiss
 
     @ViewBuilder
@@ -21,13 +20,15 @@ struct SetCustomNavBackButton: ViewModifier {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: "chevron.backward")
+                        AppImages.Icons.backward
                             .imageScale(.large)
-                            .foregroundColor(.ypBlackDuo)
+                            .foregroundStyle(AppColors.LightDark.black)
                     }
+                    .padding(.leading, -AppSizes.Spacing.xSmall)
+                    .padding(.trailing, AppSizes.Spacing.xSmall)
                 }
             }
-            .contentShape(Rectangle()) // Start of the gesture to dismiss the navigation
+            .contentShape(Rectangle())
             .gesture(
                 DragGesture(coordinateSpace: .local)
                     .onEnded { value in

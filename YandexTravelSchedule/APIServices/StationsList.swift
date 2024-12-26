@@ -9,28 +9,24 @@ import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-typealias Stations = Components.Schemas.StationsList
+typealias StationsList = Components.Schemas.StationsList
 
 protocol StationsListServiceProtocol {
-    func getStationsList() async throws -> Stations
+    func getStationsList() async throws -> StationsList
 }
 
-final class StationsListService: StationsListServiceProtocol {
+actor StationsListService: StationsListServiceProtocol, Sendable {
     private let client: Client
-    private let apikey: String
 
-    init(client: Client, apikey: String) {
+    init(client: Client) {
         self.client = client
-        self.apikey = apikey
     }
 
-    func getStationsList() async throws -> Stations {
-        let response = try await client.getStationsList(query: .init(
-            apikey: apikey
-        ))
+    func getStationsList() async throws -> StationsList {
+        let response = try await client.getStationsList(.init())
         let httpBody = try response.ok.body.html
-        let data = try await Data(collecting: httpBody, upTo: 100 * 1024 * 1024)
-        let stationList = try JSONDecoder().decode(Stations.self, from: data)
+        let data = try await Data(collecting: httpBody, upTo: Resources.maxJsonSize)
+        let stationList = try JSONDecoder().decode(StationsList.self, from: data)
         return stationList
     }
 }
