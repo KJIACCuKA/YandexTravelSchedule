@@ -1,5 +1,5 @@
 //
-//  CarrierView.swift
+//  RouteCarrierView.swift
 //  YandexTravelSchedule
 //
 //  Created by Никита Козловский on 27.11.2024.

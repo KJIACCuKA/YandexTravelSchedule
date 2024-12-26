@@ -13,15 +13,15 @@ final class RootViewModel: ObservableObject {
         case loading, loaded, error
     }
 
-    @Published private (set) var state: State = .loading
-    @Published private (set) var currentError: ErrorType = .serverError
+    @Published private(set) var state: State = .loading
+    @Published private(set) var currentError: ErrorType = .serverError
     @Published var navPath: [ViewsRouter] = []
-    @Published private (set) var store: [Components.Schemas.Settlements] = []
+    @Published private(set) var store: [Components.Schemas.Settlements] = []
 
     private let networkService: NetworkService
-    private (set) var stationsDownloader: StationsDownloader
-    private (set) var routesDownloader: RoutesDownloader
-    private (set) var imageDownloader: ImageDownloader
+    private(set) var stationsDownloader: StationsDownloader
+    private(set) var routesDownloader: RoutesDownloader
+    private(set) var imageDownloader: ImageDownloader
 
     init(
         networkService: NetworkService

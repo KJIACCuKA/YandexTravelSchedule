@@ -26,18 +26,5 @@ final class SettingsViewModel: ObservableObject {
 
     init(networkService: NetworkService) {
         self.networkService = networkService
-//        self.getCopyright()
     }
-
-//    func getCopyright() {
-//        Task {
-//            let service = CopyrightService(client: networkService.client)
-//            do {
-//                let response = try await service.getCopyright()
-//                copyrightInfo = response.copyright?.text ?? ""
-//            } catch {
-//                throw ErrorType.connectionError
-//            }
-//        }
-//    }
 }

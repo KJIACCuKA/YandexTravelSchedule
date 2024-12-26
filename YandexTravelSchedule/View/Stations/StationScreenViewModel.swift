@@ -16,7 +16,7 @@ final class StationScreenViewModel: ObservableObject {
     let notification = "Станция не найдена"
 
     @Published var searchString = String()
-    @Published private (set) var state: State = .loading
+    @Published private(set) var state: State = .loading
 
     var filteredStations: [Station] {
         searchString.isEmpty

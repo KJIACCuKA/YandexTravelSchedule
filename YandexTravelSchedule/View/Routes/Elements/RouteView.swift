@@ -11,7 +11,7 @@ struct RouteView: View {
     let route: Route
     let carrier: Carrier
     var imageDownloader: ImageDownloader
-    @State private (set) var carrierIcon = Image(systemName: "nosign.app")
+    @State private(set) var carrierIcon = Image(systemName: "nosign.app")
 
     // MARK: - Body
     var body: some View {

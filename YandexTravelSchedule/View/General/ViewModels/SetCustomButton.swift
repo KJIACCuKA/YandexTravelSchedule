@@ -17,7 +17,7 @@ struct SetCustomButton: ViewModifier {
             .font(AppFonts.Bold.small)
             .foregroundStyle(AppColors.Universal.white)
             .frame(maxHeight: AppSizes.Height.searchButton)
-            .frame(maxWidth: (width != nil) ? width : .infinity)
+            .frame(maxWidth: width != nil ? width : .infinity)
             .background(AppColors.Universal.blue)
             .clipShape(RoundedRectangle(cornerRadius: AppSizes.CornerRadius.large))
             .padding(padding, AppSizes.Spacing.large)

@@ -8,6 +8,7 @@
 import Foundation
 
 extension String {
+    
     var getLocalizedShortDate: String {
         let apiDateFormatter = DateFormatter()
         apiDateFormatter.dateFormat = "yyyy-MM-dd"
@@ -18,7 +19,8 @@ extension String {
         dateFormatter.dateFormat = "dd MMMM"
         return dateFormatter.string(from: date)
     }
+    
     var returnTimeString: String {
-        return String(self.suffix(14).prefix(5))
+        String(suffix(14).prefix(5))
     }
 }

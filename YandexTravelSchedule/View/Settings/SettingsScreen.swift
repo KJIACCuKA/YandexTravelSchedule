@@ -45,7 +45,8 @@ private extension SettingsScreen {
     }
 
     var footerView: some View {
-        VStack(alignment: .center, spacing: AppSizes.Spacing.large) {
+        VStack(
+            spacing: AppSizes.Spacing.large) {
             Text(viewModel.copyrightInfo)
             Text(Titles.version)
         }

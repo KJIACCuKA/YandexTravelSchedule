@@ -16,7 +16,7 @@ final class CityScreenViewModel: ObservableObject {
     let notification = "Город не найден"
 
     @Published var searchString = String()
-    @Published private (set) var state: State = .loading
+    @Published private(set) var state: State = .loading
 
     var filteredCities: [City] {
         searchString.isEmpty

@@ -19,15 +19,15 @@ final class RoutesScreenViewModel: ObservableObject {
     @Published var filter = Filter()
     @Published private(set) var isError: Bool = false
 
-    @Published private (set) var state: State = .loading
-    @Published private (set) var carriers: [Carrier] = []
-    @Published private (set) var currentError: ErrorType = .serverError
+    @Published private(set) var state: State = .loading
+    @Published private(set) var carriers: [Carrier] = []
+    @Published private(set) var currentError: ErrorType = .serverError
 
-    @Published private (set) var destinations: [Destination]
+    @Published private(set) var destinations: [Destination]
 
-    private (set) var routes: [Route]
-    private (set) var routesDownloader: RoutesDownloader
-    private (set) var imageDownloader: ImageDownloader
+    private(set) var routes: [Route]
+    private(set) var routesDownloader: RoutesDownloader
+    private(set) var imageDownloader: ImageDownloader
 
     var departure: String {
         destinations[.departure].station.title.contains(destinations[.departure].city.title)
